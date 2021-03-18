@@ -7,9 +7,10 @@ function setupExpress(app){
         extname: 'hbs'
     }))
     
-    app.set('view engine', 'hbs');
+    app.set('view engine', 'hbs')
     
     app.use(express.static('public'))
+    
 
 }
 
