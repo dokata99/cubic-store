@@ -7,6 +7,10 @@ const fs = require('fs')
 function getAll(){
     return productsDate
 }
+
+function getById(id){
+    return productsDate.find(x=> x.id == id)
+}
 function create(data){
 
     let cube = new Cube(
@@ -29,5 +33,6 @@ function create(data){
 
 module.exports = {
     create,
-    getAll
+    getAll,
+    getById
 }
