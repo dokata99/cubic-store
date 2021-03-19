@@ -1,13 +1,12 @@
 const Cube = require('../models/Cube')
 const uniqid = require('uniqid')
-const productsDate = require('../config/products.json')
-const fs = require('fs')
-const path = require('path')
+const productData = require('../data/productData')
 
 
 function getAll(query) {
 
-    let result = productsDate
+    let result = productData.getAll()
+
     if (query.search) {
         result = result.filter(x => x.name.toLowerCase().includes(query.search))
     }
@@ -22,7 +21,7 @@ function getAll(query) {
 }
 
 function getById(id) {
-    return productsDate.find(x => x.id == id)
+    return productData.getById(id);
 }
 function create(data) {
 
@@ -34,13 +33,7 @@ function create(data) {
         data.difficultyLevel
     )
 
-    productsDate.push(cube)
-    fs.writeFile(path.join(__dirname, '/../config/products.json'), JSON.stringify(productsDate), (err) => {
-        if (err) {
-            console.log(err)
-            return
-        }
-    })
+    return productData.create(cube)
 
 }
 
