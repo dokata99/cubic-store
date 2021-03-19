@@ -4,7 +4,7 @@ const router = Router()
 
 
 router.get('/', (req, res) => {
-    let products = productServices.getAll()
+    let products = productServices.getAll(req.query)
     res.render('home', { title: 'Products', products })
 })
 router.get('/create', (req, res) => {
