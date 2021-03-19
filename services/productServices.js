@@ -2,6 +2,7 @@ const Cube = require('../models/Cube')
 const uniqid = require('uniqid')
 const productsDate = require('../config/products.json')
 const fs = require('fs')
+const path = require('path')
 
 
 function getAll(){
@@ -22,7 +23,7 @@ function create(data){
     )
     
     productsDate.push(cube)
-    fs.writeFile(__dirname +'/../config/products.json',JSON.stringify(productsDate), (err) =>{
+    fs.writeFile(path.join(__dirname ,'/../config/products.json'),JSON.stringify(productsDate), (err) =>{
         if(err){
             console.log(err)
             return
