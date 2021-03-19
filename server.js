@@ -6,6 +6,7 @@ const app = express()
 const expressConfig = require('./config/express')
 
 expressConfig(app)
+
 app.use(routes)
 
 
