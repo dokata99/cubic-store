@@ -11,7 +11,9 @@ router.get('/create', (req, res) => {
     res.render('create', { title: 'Create' })
 })
 router.post('/create', (req, res) => {
-    console.log(req.body)
+    console.log(req.body)   
+
+    console.log('hello')
 
     //TODO: VALIDATE INPUTS!    
     productServices.create(req.body)
