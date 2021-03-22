@@ -1,11 +1,11 @@
 const Cube = require('../models/Cube')
 const uniqid = require('uniqid')
-const productData = require('../data/productData')
 
 
 function getAll(query) {
 
-    let result = productData.getAll()
+
+    let result = Cube.getAll()
 
     if (query.search) {
         result = result.filter(x => x.name.toLowerCase().includes(query.search))
@@ -21,7 +21,7 @@ function getAll(query) {
 }
 
 function getById(id) {
-    return productData.getById(id);
+    return Cube.getById(id)
 }
 function create(data) {
 
@@ -33,7 +33,7 @@ function create(data) {
         data.difficultyLevel
     )
 
-    return productData.create(cube)
+    return cube.save()
 
 }
 

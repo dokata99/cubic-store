@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('fs/promises')
 const path = require('path')
 const productsDb = require('../config/products.json')
 
@@ -15,13 +15,9 @@ module.exports = {
 
         productsDb.push(product)
 
-        return fs.writeFile(path.join(__dirname, '/../config/products.json'),
-            JSON.stringify(productsDb),
-            (err) => {
-                if (err) {
-                    console.log(err)
-                    return
-                }
-            })
+        return fs.writeFile(
+            path.join(__dirname + '../config/products.json'),
+            JSON.stringify(productsDb)
+        )
     }
 }
