@@ -24,14 +24,14 @@ router.post('/create', validateProduct, (req, res) => {
 })
 
 router.get('/details/:productId', async(req, res) => {
-    let products = await productServices.getById(req.params.productId)
+    let products = await productServices.getByIdWithAccessories(req.params.productId)
     
     res.render('details', { title: 'Product Details', products })
 })
 
 router.get('/:productId/attach', async(req, res)=>{
     let products = await productServices.getById(req.params.productId)
-    let accessories = await accessoryServices.getAll()
+    let accessories = await accessoryServices.getAllWithout(products.accessories)
 
     res.render('attachAccessory',{title: 'Attach Accsessory', products , accessories})
 })  
