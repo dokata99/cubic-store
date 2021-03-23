@@ -3,7 +3,7 @@
   <div class="form">
     <h2>{{products.name}}</h2>
     <img class="cube" src="{{products.imageUrl}}">
-    <form action='' method="">
+    <form action="/{{products._id}}/attach" method="POST">
       <label for="accessory">Accessories</label>
       <select id="accessory" name="accessory">
         {{#each accessories}}

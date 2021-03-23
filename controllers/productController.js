@@ -35,5 +35,8 @@ router.get('/:productId/attach', async(req, res)=>{
 
     res.render('attachAccessory',{title: 'Attach Accsessory', products , accessories})
 })  
-
+router.post('/:productId/attach',(req, res)=>{
+    productServices.attachAccessory(req.params.productId,req.body.accessory)
+    .then(()=> res.redirect(`/details/${req.params.productId}`))
+})
 module.exports = router

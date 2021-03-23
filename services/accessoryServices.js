@@ -6,7 +6,7 @@ function getAll() {
 }
 
 function getById(id) {
-    //   return Accessory.findById(id).lean()
+    //return Accessory.findById(id).lean()
 }
 
 function create(data) {
@@ -19,5 +19,6 @@ function create(data) {
 
 module.exports = {
     create,
-    getAll
+    getAll,
+    //getById
 }
