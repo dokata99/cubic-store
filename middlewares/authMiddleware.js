@@ -12,6 +12,8 @@ module.exports = function () {
                     res.clearCookie(COOKIE_NAME)
                 }else{
                     req.user = decoded
+                    req.locals = decoded
+                    res.locals.isAuthenticated = true
                 }
             })
         }

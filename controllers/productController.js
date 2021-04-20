@@ -14,10 +14,10 @@ router.get('/', (req, res) => {
             res.render('home', { title: 'Products', products })
         }).catch(() => res.status(500).end())
 })
-router.get('/create',isVerified, (req, res) => {
+router.get('/create', isVerified, (req, res) => {
     res.render('create', { title: 'Create' })
 })
-router.post('/create', validateProduct, (req, res) => {
+router.post('/create', isVerified, validateProduct, (req, res) => {
 
     //TODO: VALIDATE INPUTS!    
     productServices.create(req.body)
@@ -26,20 +26,27 @@ router.post('/create', validateProduct, (req, res) => {
 
 })
 
-router.get('/details/:productId', async(req, res) => {
+router.get('/details/:productId', async (req, res) => {
     let products = await productServices.getByIdWithAccessories(req.params.productId)
-    
+
     res.render('details', { title: 'Product Details', products })
 })
 
-router.get('/:productId/attach', async(req, res)=>{
+router.get('/:productId/attach', isVerified, async (req, res) => {
     let products = await productServices.getById(req.params.productId)
     let accessories = await accessoryServices.getAllWithout(products.accessories)
 
-    res.render('attachAccessory',{title: 'Attach Accsessory', products , accessories})
-})  
-router.post('/:productId/attach',(req, res)=>{
-    productServices.attachAccessory(req.params.productId,req.body.accessory)
-    .then(()=> res.redirect(`/details/${req.params.productId}`))
+    res.render('attachAccessory', { title: 'Attach Accsessory', products, accessories })
+})
+router.post('/:productId/attach', isVerified, (req, res) => {
+    productServices.attachAccessory(req.params.productId, req.body.accessory)
+        .then(() => res.redirect(`/details/${req.params.productId}`))
+})
+router.get('/:productId/edit', isVerified, async (req, res) => {
+    let products = await productServices.getById(req.params.productId)
+    res.render('edit', { title: 'Edit', products })
+})
+router.post('/:productId/edit', isVerified, (req, res) => {
+
 })
 module.exports = router
