@@ -1,5 +1,8 @@
 const express = require('express')
 const handlebars = require('express-handlebars')
+const cookieParser = require('cookie-parser')
+
+const authMiddleware = require('../middlewares/authMiddleware')
 
 function setupExpress(app) {
 
@@ -14,7 +17,9 @@ function setupExpress(app) {
     app.use(express.urlencoded({
         extended: true
     }))
-
+    app.use(cookieParser())
+    
+    app.use(authMiddleware())
 
 }
 

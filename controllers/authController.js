@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const authServices = require('../services/authServices')
+const config = require('../config/config')
 
 const router = Router()
 
@@ -13,7 +14,7 @@ router.post('/login', async (req, res) =>{
     try{
         let token = await authServices.login({username, password});
         
-        res.cookie('USER_SESSION',token)
+        res.cookie(config.COOKIE_NAME,token)
         res.redirect('/');
     }catch(error){
         console.log(error)

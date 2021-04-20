@@ -1,8 +1,11 @@
 const { Router } = require('express')
+const isVerified = require('../middlewares/isVerified')
+const isGuest = require('../middlewares/isGuest')
 const productServices = require('../services/productServices')
 const accessoryServices = require('../services/accessoryServices')
 const router = Router()
 const { validateProduct } = require('./helpers/productHelper')
+
 
 
 router.get('/', (req, res) => {
@@ -11,7 +14,7 @@ router.get('/', (req, res) => {
             res.render('home', { title: 'Products', products })
         }).catch(() => res.status(500).end())
 })
-router.get('/create', (req, res) => {
+router.get('/create',isVerified, (req, res) => {
     res.render('create', { title: 'Create' })
 })
 router.post('/create', validateProduct, (req, res) => {
