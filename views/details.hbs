@@ -3,7 +3,7 @@
     <img class="cube" src={{products.imageUrl}}>
     <div class="details">
         <p><span>Description:</span>{{products.description}}</p>
-        <p><span>Difficulty level:</span>{{products.level}}</p>
+        <p><span>Difficulty level:</span>{{products.difficultyLevel}}</p>
         <a class="btn" href="/">Back</a>
         {{#if isAuthenticated}}
         <a class="btn" href="/{{products._id}}/attach">Attach</a>

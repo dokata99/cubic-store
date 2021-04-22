@@ -42,11 +42,24 @@ router.post('/:productId/attach', isVerified, (req, res) => {
     productServices.attachAccessory(req.params.productId, req.body.accessory)
         .then(() => res.redirect(`/details/${req.params.productId}`))
 })
-router.get('/:productId/edit', isVerified, async (req, res) => {
-    let products = await productServices.getById(req.params.productId)
-    res.render('edit', { title: 'Edit', products })
+router.get('/:productId/edit', isVerified,(req, res) => {
+    productServices.getById(req.params.productId)
+    .then(product =>{
+        res.render('edit', {title:'Edit', product} )
+    })
 })
 router.post('/:productId/edit', isVerified, (req, res) => {
 
+    productServices.edit(req.params.productId, req.body)
+    .then(() =>
+        res.redirect(`/details/${req.params.productId}`)
+    )
+    
+})
+router.get('/:productId/delete', isVerified, async (req, res) => {
+    
+})
+router.post('/:productId/delete', isVerified, async (req, res) => {
+    //TODO
 })
 module.exports = router
