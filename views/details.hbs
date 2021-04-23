@@ -6,9 +6,11 @@
         <p><span>Difficulty level:</span>{{products.difficultyLevel}}</p>
         <a class="btn" href="/">Back</a>
         {{#if isAuthenticated}}
+        {{#if isOwner}}
         <a class="btn" href="/{{products._id}}/attach">Attach</a>
         <a class="btn" href="/{{products._id}}/edit">Edit</a>
         <a class="btn" href="/{{products._id}}/delete">Delete</a>
+        {{/if}}
         {{/if}}
     </div>
     <h2>Accessories</h2>

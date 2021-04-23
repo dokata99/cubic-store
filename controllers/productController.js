@@ -1,6 +1,5 @@
 const { Router } = require('express')
 const isVerified = require('../middlewares/isVerified')
-const isGuest = require('../middlewares/isGuest')
 const productServices = require('../services/productServices')
 const accessoryServices = require('../services/accessoryServices')
 const router = Router()
@@ -20,7 +19,7 @@ router.get('/create', isVerified, (req, res) => {
 router.post('/create', isVerified, validateProduct, (req, res) => {
 
     //TODO: VALIDATE INPUTS!    
-    productServices.create(req.body)
+    productServices.create(req.body, req.user._id)
         .then(() => res.redirect('/'))
         .catch(() => res.status(500).end())
 
@@ -28,8 +27,12 @@ router.post('/create', isVerified, validateProduct, (req, res) => {
 
 router.get('/details/:productId', async (req, res) => {
     let products = await productServices.getByIdWithAccessories(req.params.productId)
-
-    res.render('details', { title: 'Product Details', products })
+    let isOwner = false;
+    if(req.user){
+        isOwner = await productServices.check(req.user._id, req.params.productId)
+    }
+    
+    res.render('details', { title: 'Product Details', products, isOwner})
 })
 
 router.get('/:productId/attach', isVerified, async (req, res) => {
@@ -42,24 +45,31 @@ router.post('/:productId/attach', isVerified, (req, res) => {
     productServices.attachAccessory(req.params.productId, req.body.accessory)
         .then(() => res.redirect(`/details/${req.params.productId}`))
 })
-router.get('/:productId/edit', isVerified,(req, res) => {
+router.get('/:productId/edit', isVerified, (req, res) => {
     productServices.getById(req.params.productId)
-    .then(product =>{
-        res.render('edit', {title:'Edit', product} )
-    })
+        .then(product => {
+            res.render('edit', { title: 'Edit', product })
+        })
 })
 router.post('/:productId/edit', isVerified, (req, res) => {
 
     productServices.edit(req.params.productId, req.body)
-    .then(() =>
-        res.redirect(`/details/${req.params.productId}`)
-    )
-    
+        .then(() =>
+            res.redirect(`/details/${req.params.productId}`)
+        )
+
 })
-router.get('/:productId/delete', isVerified, async (req, res) => {
-    
+router.get('/:productId/delete', isVerified, (req, res) => {
+    productServices.getById(req.params.productId)
+        .then(product => {
+            res.render('delete', { title: 'Delete', product })
+        })
 })
-router.post('/:productId/delete', isVerified, async (req, res) => {
+router.post('/:productId/delete', isVerified, (req, res) => {
     //TODO
+    productServices.deleteById(req.params.productId)
+        .then(() =>
+            res.redirect('/')
+        )
 })
 module.exports = router

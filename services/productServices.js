@@ -26,9 +26,9 @@ function getById(id) {
     return Cube.findById(id).lean()
     
 }
-function create(data) {
+function create(data, userId) {
 
-    let cube = new Cube(data)
+    let cube = new Cube({...data,creator: userId})
 
     return cube.save()
 
@@ -47,6 +47,18 @@ async function attachAccessory(productId,accessoryId){
 function edit(productId, productData){
     return Cube.updateOne({_id: productId}, productData)
 }
+function deleteById(productId){
+    return Cube.deleteOne({_id: productId})
+}
+async function check(userId, cubeId){
+    if(userId != undefined && cubeId != undefined){
+        let cube = await Cube.findById(cubeId)
+        if(userId == cube.creator._id){
+            return true
+        }
+    }
+    return false
+}
 
 module.exports = {
     create,
@@ -54,5 +66,7 @@ module.exports = {
     getById,
     attachAccessory,
     getByIdWithAccessories,
-    edit
+    edit,
+    deleteById,
+    check
 }

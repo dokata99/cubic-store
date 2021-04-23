@@ -1,16 +1,17 @@
 
     <main>
-	<h1>Delete Cube</h1>
+	<h1>Delete {{product.name}}</h1>
 <div class="form">
-  <form action='/{{products._id}}/delete' method="POST">
+  <form action='/{{product._id}}/delete' method="POST">
     <label for="name">Name</label>
-    <input type="text" id="name" name="name" value="" disabled="true"/>
+    <input type="text" id="name" name="name" value="{{product.name}}" disabled="true"/>
     <label for="name">Description</label>
-    <textarea id="name" name="description" disabled="true"/></textarea>
+    <textarea id="name" name="description" disabled="true"/>{{product.description}}</textarea>
     <label for="image">ImageUrl</label>
-    <input type="text" id="image" name="imageUrl" value="" disabled="true"/>
+    <input type="text" id="image" name="imageUrl" value="{{product.imageUrl}}" disabled="true"/>
     <label for="difficulty">Difficulty</label>
-    <select id="difficulty" name="difficultyLevel" value="" disabled="true"/>
+    <select id="difficulty" name="difficultyLevel" value="{{product.difficultyLevel}}" disabled="true"/>
+      <option value="{{product.difficultyLevel}}" hidden="hidden" selected="selected">{{product.difficultyLevel}}</option>
       <option value="1">1 - Very Easy</option>
       <option value="2">2 - Easy</option>
       <option value="3">3 - Medium (Standard 3x3)</option>
